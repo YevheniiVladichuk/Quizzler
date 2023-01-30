@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D45175E298807B30062E6A3 /* QuizHead.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45175D298807B30062E6A3 /* QuizHead.swift */; };
 		4D7A239729819511003397C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7A239629819511003397C1 /* AppDelegate.swift */; };
 		4D7A239929819511003397C1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7A239829819511003397C1 /* SceneDelegate.swift */; };
 		4D7A239B29819511003397C1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7A239A29819511003397C1 /* ViewController.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4D45175D298807B30062E6A3 /* QuizHead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizHead.swift; sourceTree = "<group>"; };
 		4D7A239329819511003397C1 /* Quizzler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quizzler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D7A239629819511003397C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D7A239829819511003397C1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				4D86B9672986C15000351F9B /* Question.swift */,
+				4D45175D298807B30062E6A3 /* QuizHead.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -174,6 +177,7 @@
 			files = (
 				4D86B9682986C15000351F9B /* Question.swift in Sources */,
 				4D7A239B29819511003397C1 /* ViewController.swift in Sources */,
+				4D45175E298807B30062E6A3 /* QuizHead.swift in Sources */,
 				4D7A239729819511003397C1 /* AppDelegate.swift in Sources */,
 				4D7A23CD29854DB0003397C1 /* UserInterface.swift in Sources */,
 				4D7A239929819511003397C1 /* SceneDelegate.swift in Sources */,

@@ -9,7 +9,9 @@ import Foundation
 import UIKit
 
 class UserInterface: UIView {
-        
+    
+    var quizHead = QuizHead()
+    
     let verticalStackView: UIStackView = {
         let verticalStackView = UIStackView()
         verticalStackView.axis = .vertical
