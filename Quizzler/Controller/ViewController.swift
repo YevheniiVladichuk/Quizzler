@@ -36,20 +36,31 @@ class ViewController: UIViewController {
         
         let userAnswer = sender.currentTitle!
         let correctAnswer = quiz[questionNumber].answer
+        
         if userAnswer == correctAnswer {
             score += 1
+            sender.backgroundColor = .green
+        } else {
+            sender.backgroundColor = .red
         }
-    
+        
         if questionNumber + 1 < quiz.count {
             questionNumber += 1
-            updateUI()
+            
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: updateUI)
         } else {
             // show the score result
-            userInterface.questionLabel.text = "Score: \(score)"
-            userInterface.scoreLabel.alpha = 0
-            
-            // reset the interface
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+                self.userInterface.trueButton.alpha = 0
+                self.userInterface.falseButton.alpha = 0
+                self.userInterface.progressBar.alpha = 0
+                self.userInterface.questionLabel.text = "Score: \(self.score)"
+                self.userInterface.scoreLabel.alpha = 0
+                
+            }
+            // reset values
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.questionNumber = 0
                 self.score = 0
                 self.updateUI()
@@ -58,9 +69,13 @@ class ViewController: UIViewController {
     }
     
     func updateUI(){
+        userInterface.trueButton.backgroundColor = .clear
+        userInterface.falseButton.backgroundColor = .clear
         userInterface.scoreLabel.alpha = 1
+        userInterface.trueButton.alpha = 1
+        userInterface.falseButton.alpha = 1
+        userInterface.progressBar.alpha = 1
         userInterface.scoreLabel.text = "Score: \(score)"
         userInterface.questionLabel.text = quiz[questionNumber].text
     }
 }
-
