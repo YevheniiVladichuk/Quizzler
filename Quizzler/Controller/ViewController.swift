@@ -10,19 +10,26 @@ import UIKit
 class ViewController: UIViewController {
     
     let userInterface = UserInterface()
+    let startView = StartView()
     var quizHead = QuizHead()
     
     override func loadView() {
         super.loadView()
-        self.view = userInterface
+        self.view = startView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateUI()
+        
+        startView.trueButton.addTarget(self, action: #selector(choosedQuiz), for: .touchUpInside)
+        startView.falseButton.addTarget(self, action: #selector(choosedQuiz), for: .touchUpInside)
         
         userInterface.trueButton.addTarget(self, action: #selector(answerButtonTapped), for: .touchUpInside)
         userInterface.falseButton.addTarget(self, action: #selector(answerButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc func choosedQuiz(_ sender: UIButton) {
+        
     }
     
     @objc func answerButtonTapped(_ sender: UIButton!){
@@ -30,8 +37,7 @@ class ViewController: UIViewController {
         let userAnswer = sender.currentTitle!
         sender.backgroundColor = quizHead.checkAnswer(userAnswer)
         
-        if quizHead.questionNumber + 1 < quizHead.quiz.count {
-            quizHead.questionNumber += 1
+        if quizHead.nextQuestion() {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: updateUI)
         } else {
             // show the score result

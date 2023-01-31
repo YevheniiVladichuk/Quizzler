@@ -10,8 +10,6 @@ import UIKit
 
 class UserInterface: UIView {
     
-    var quizHead = QuizHead()
-    
     let verticalStackView: UIStackView = {
         let verticalStackView = UIStackView()
         verticalStackView.axis = .vertical
@@ -33,9 +31,11 @@ class UserInterface: UIView {
         return scoreLabel
     }()
     
-    let questionLabel: UILabel = {
+    var questionLabel: UILabel = {
         let questionLabel = UILabel()
         questionLabel.textColor = .white
+        questionLabel.textAlignment = .center
+        questionLabel.numberOfLines = 0
         questionLabel.font = UIFont(name: "American Typewriter", size: 30)
         questionLabel.translatesAutoresizingMaskIntoConstraints = false
         return questionLabel
@@ -63,6 +63,18 @@ class UserInterface: UIView {
         falseButton.layer.borderColor = #colorLiteral(red: 0.2752144039, green: 0.3882935941, blue: 0.5629131198, alpha: 1)
         falseButton.translatesAutoresizingMaskIntoConstraints = false
         return falseButton
+    }()
+    
+    let thirdButton: UIButton = {
+        let thirdButton = UIButton()
+        thirdButton.backgroundColor = UIColor.clear
+        thirdButton.setTitle(nil, for: .normal)
+        thirdButton.titleLabel?.font = thirdButton.titleLabel?.font.withSize(28)
+        thirdButton.layer.cornerRadius = 15
+        thirdButton.layer.borderWidth = 2
+        thirdButton.layer.borderColor = #colorLiteral(red: 0.2752144039, green: 0.3882935941, blue: 0.5629131198, alpha: 1)
+        thirdButton.translatesAutoresizingMaskIntoConstraints = false
+        return thirdButton
     }()
     
     let backGroundImage: UIImageView = {

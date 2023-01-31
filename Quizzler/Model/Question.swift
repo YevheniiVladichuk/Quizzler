@@ -11,3 +11,10 @@ struct Question {
     let text: String
     let answer: String
 }
+
+struct QuestionHistory {
+    let text: String
+    let correctAnswer: String
+    let firstWrong: String
+    let secondWrong: String
+}
