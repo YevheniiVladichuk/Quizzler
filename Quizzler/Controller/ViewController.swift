@@ -9,9 +9,12 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let userInterface = UserInterface()
     let startView = StartView()
-    var quizHead = QuizHead()
+    let mathUI = MathUI()
+    let historyUI = HistoryUI()
+    
+    var quizManager = QuizManager()
+    var selectedView: AppUI?
     
     override func loadView() {
         super.loadView()
@@ -20,53 +23,95 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        startView.trueButton.addTarget(self, action: #selector(choosedQuiz), for: .touchUpInside)
-        startView.falseButton.addTarget(self, action: #selector(choosedQuiz), for: .touchUpInside)
-        
-        userInterface.trueButton.addTarget(self, action: #selector(answerButtonTapped), for: .touchUpInside)
-        userInterface.falseButton.addTarget(self, action: #selector(answerButtonTapped), for: .touchUpInside)
+        startView.firstButton.addTarget(self, action: #selector(topicSelected), for: .touchUpInside)
+        startView.secondButton.addTarget(self, action: #selector(topicSelected), for: .touchUpInside)
     }
     
-    @objc func choosedQuiz(_ sender: UIButton) {
-        
+    // topic selected, show view with selected topic
+    @objc func topicSelected(_ sender: UIButton) {
+        if sender.currentTitle == "Math" {
+            quizManager.selectedQuiz = quizManager.quizMath
+            selectedView = mathUI
+            view = selectedView
+            selectedView!.firstButton.addTarget(self, action: #selector(answerButtonTapped), for: .touchUpInside)
+            selectedView!.secondButton.addTarget(self, action: #selector(answerButtonTapped), for: .touchUpInside)
+            updateUI()
+        } else {
+            quizManager.selectedQuiz = quizManager.quizHistory
+            selectedView = historyUI
+            view = selectedView
+            selectedView!.firstButton.addTarget(self, action: #selector(answerButtonTapped), for: .touchUpInside)
+            selectedView!.secondButton.addTarget(self, action: #selector(answerButtonTapped), for: .touchUpInside)
+            selectedView!.thirdButton.addTarget(self, action: #selector(answerButtonTapped), for: .touchUpInside)
+            updateUI()
+        }
     }
     
     @objc func answerButtonTapped(_ sender: UIButton!){
         
         let userAnswer = sender.currentTitle!
-        sender.backgroundColor = quizHead.checkAnswer(userAnswer)
+        sender.backgroundColor = quizManager.checkAnswer(userAnswer)
         
-        if quizHead.nextQuestion() {
+        if quizManager.nextQuestion() {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: updateUI)
         } else {
             // show the score result
-            userInterface.progressBar.progress += 1
+            selectedView!.progressBar.progress += 1
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-                self.userInterface.trueButton.alpha = 0
-                self.userInterface.falseButton.alpha = 0
-                self.userInterface.progressBar.alpha = 0
-                self.userInterface.questionLabel.text = "Score: \(self.quizHead.score)"
-                self.userInterface.scoreLabel.alpha = 0
+                self.selectedView!.firstButton.alpha = 0
+                self.selectedView!.secondButton.alpha = 0
+                self.selectedView!.thirdButton.alpha = 0
+                self.selectedView!.progressBar.alpha = 0
+                self.selectedView!.questionLabel.text = "Score: \(self.quizManager.score)"
+                self.selectedView!.scoreLabel.alpha = 0
             }
-            // reset values
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.quizHead.questionNumber = 0
-                self.quizHead.score = 0
-                self.updateUI()
+            // reset values and show start view
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: resetQuiz)
+        }
+    }
+    
+    func setButtonsTitles() {
+        if selectedView! == mathUI {
+            selectedView!.firstButton.setTitle("True", for: .normal)
+            selectedView!.secondButton.setTitle("False", for: .normal)
+        } else {
+            let buttonsArray = [selectedView!.firstButton, selectedView!.secondButton, selectedView!.thirdButton]
+            
+            let correctAnswer = quizManager.historyAnswers[quizManager.questionNumber].correct
+            let wrongA = quizManager.historyAnswers[quizManager.questionNumber].wrongA
+            let wrongB = quizManager.historyAnswers[quizManager.questionNumber].wrongB
+            
+            var answersArray = [correctAnswer, wrongA, wrongB]
+            
+            // set title for buttons of answers options random
+            for buttons in buttonsArray {
+                let randomTitle = answersArray.randomElement()
+                buttons.setTitle(randomTitle, for: .normal)
+                if let index = answersArray.firstIndex(of: randomTitle!) {
+                    answersArray.remove(at: index)
+                }
             }
         }
     }
     
     func updateUI(){
-        userInterface.trueButton.backgroundColor = .clear
-        userInterface.falseButton.backgroundColor = .clear
-        userInterface.scoreLabel.alpha = 1
-        userInterface.trueButton.alpha = 1
-        userInterface.falseButton.alpha = 1
-        userInterface.progressBar.alpha = 1
-        userInterface.scoreLabel.text = "Score: \(quizHead.score)"
-        userInterface.questionLabel.text = quizHead.getQuestion()
-        userInterface.progressBar.progress = quizHead.getProgress()
+        setButtonsTitles()
+        selectedView!.firstButton.backgroundColor = .clear
+        selectedView!.secondButton.backgroundColor = .clear
+        selectedView!.thirdButton.backgroundColor = .clear
+        selectedView!.scoreLabel.alpha = 1
+        selectedView!.firstButton.alpha = 1
+        selectedView!.thirdButton.alpha = 1
+        selectedView!.secondButton.alpha = 1
+        selectedView!.progressBar.alpha = 1
+        selectedView!.scoreLabel.text = "Score: \(quizManager.score)"
+        selectedView!.questionLabel.text = quizManager.getQuestion()
+        selectedView!.progressBar.progress = quizManager.getProgress()
+    }
+    
+    func resetQuiz() {
+        quizManager.questionNumber = 0
+        quizManager.score = 0
+        view = startView
     }
 }

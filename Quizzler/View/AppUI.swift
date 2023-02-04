@@ -25,7 +25,7 @@ class AppUI: UIView {
     let scoreLabel: UILabel = {
         let scoreLabel = UILabel()
         scoreLabel.textColor = .white
-        scoreLabel.text = "Default text"
+        scoreLabel.text = "Score: "
         scoreLabel.font = UIFont(name: "American Typewriter", size: 17)
         scoreLabel.baselineAdjustment = .alignBaselines
         scoreLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -35,6 +35,7 @@ class AppUI: UIView {
     let questionLabel: UILabel = {
         let questionLabel = UILabel()
         questionLabel.textColor = .white
+        questionLabel.text = "Default text"
         questionLabel.textAlignment = .center
         questionLabel.numberOfLines = 0
         questionLabel.font = UIFont(name: "American Typewriter", size: 30)
@@ -45,8 +46,8 @@ class AppUI: UIView {
     let firstButton: UIButton = {
         let firstButton = UIButton()
         firstButton.backgroundColor = UIColor.clear
-        firstButton.setTitle(nil, for: .normal)
-        firstButton.titleLabel?.font = firstButton.titleLabel?.font.withSize(28)
+        firstButton.setTitle("First Button", for: .normal)
+        firstButton.titleLabel?.font = UIFont(name: "American Typewriter", size: 22)
         firstButton.layer.cornerRadius = 15
         firstButton.layer.borderWidth = 2
         firstButton.layer.borderColor = #colorLiteral(red: 0.2752144039, green: 0.3882935941, blue: 0.5629131198, alpha: 1)
@@ -57,8 +58,8 @@ class AppUI: UIView {
     let secondButton: UIButton = {
         let secondButton = UIButton()
         secondButton.backgroundColor = UIColor.clear
-        secondButton.setTitle(nil, for: .normal)
-        secondButton.titleLabel?.font = secondButton.titleLabel?.font.withSize(28)
+        secondButton.setTitle("Second Button", for: .normal)
+        secondButton.titleLabel?.font = UIFont(name: "American Typewriter", size: 22)
         secondButton.layer.cornerRadius = 15
         secondButton.layer.borderWidth = 2
         secondButton.layer.borderColor = #colorLiteral(red: 0.2752144039, green: 0.3882935941, blue: 0.5629131198, alpha: 1)
@@ -69,8 +70,8 @@ class AppUI: UIView {
     let thirdButton: UIButton = {
         let thirdButton = UIButton()
         thirdButton.backgroundColor = UIColor.clear
-        thirdButton.setTitle(nil, for: .normal)
-        thirdButton.titleLabel?.font = thirdButton.titleLabel?.font.withSize(28)
+        thirdButton.setTitle("Third Button", for: .normal)
+        thirdButton.titleLabel?.font = UIFont(name: "American Typewriter", size: 22)
         thirdButton.layer.cornerRadius = 15
         thirdButton.layer.borderWidth = 2
         thirdButton.layer.borderColor = #colorLiteral(red: 0.2752144039, green: 0.3882935941, blue: 0.5629131198, alpha: 1)
@@ -96,4 +97,26 @@ class AppUI: UIView {
         progressBar.translatesAutoresizingMaskIntoConstraints = false
         return progressBar
     }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addBackgroundImage()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        addBackgroundImage()
+    }
+    
+    func addBackgroundImage() {
+        // view background color
+        backgroundColor = UIColor(red: 49/255, green: 59/255, blue: 93/255, alpha: 1)
+        
+        addSubview(backGroundImage)
+        NSLayoutConstraint.activate([
+            backGroundImage.heightAnchor.constraint(equalToConstant: 127),
+            backGroundImage.bottomAnchor.constraint(equalTo: bottomAnchor),
+            backGroundImage.widthAnchor.constraint(equalTo: widthAnchor),
+        ])
+    }
 }

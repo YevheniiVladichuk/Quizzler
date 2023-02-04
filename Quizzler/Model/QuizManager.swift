@@ -8,8 +8,7 @@
 import Foundation
 import UIKit
 
-struct QuizHead {
-    
+struct QuizManager {
     
     let quizMath = [
         Question(text: "4 + 2 = 6", answer: "True"),
@@ -20,16 +19,25 @@ struct QuizHead {
     ]
     
     let quizHistory = [
-        QuestionHistory(text: "Where did the Olympic Games originate?", correctAnswer: "Greece", firstWrong: "Italy", secondWrong: "Atlantida"),
-        QuestionHistory(text: "What is the name of the most famous pyramids?", correctAnswer: "The Great Pyramids of Giza", firstWrong: "The Great Pyramids of Independents", secondWrong: "Mesoamerican pyramids"),
-        QuestionHistory(text: "Who was the first American President?", correctAnswer: "George Washington.", firstWrong: "Will Smith", secondWrong: "Benjamin Franklin")
+        Question(text: "Where did the Olympic Games originate?", answer: "Greece"),
+        Question(text: "What is the name of the most famous pyramids?", answer: "The Great Pyramids of Giza"),
+        Question(text: "Who was the first American President?", answer: "George Washington")
     ]
+    
+    let historyAnswers = [
+        HistoryAnswers(correct: "Greece", wrongA: "Atlantida", wrongB: "Italy"),
+        HistoryAnswers(correct: "The Great Pyramids of Giza", wrongA: "The Great Pyramids of Sparta", wrongB: "Mesoamerican pyramids"),
+        HistoryAnswers(correct: "George Washington", wrongA: "Will Smith", wrongB: "Benjamin Franklin")
+    ]
+    
+    
+    var selectedQuiz: [Question]?
     
     var questionNumber = 0
     var score = 0
     
     mutating func checkAnswer(_ userAnswer: String)-> UIColor {
-        if userAnswer == quizMath[questionNumber].answer {
+        if userAnswer == selectedQuiz![questionNumber].answer {
             score += 1
             return UIColor.green
         } else {
@@ -38,15 +46,15 @@ struct QuizHead {
     }
     
     func getQuestion() -> String {
-        return quizMath[questionNumber].text
+        return selectedQuiz![questionNumber].text
     }
     
     func getProgress() -> Float {
-        return Float(questionNumber) / Float(quizMath.count)
+        return Float(questionNumber) / Float(selectedQuiz!.count)
     }
     
     mutating func nextQuestion()-> Bool {
-        if questionNumber + 1 < quizMath.count {
+        if questionNumber + 1 < selectedQuiz!.count {
             questionNumber += 1
             return true
         } else {

@@ -12,9 +12,15 @@ struct Question {
     let answer: String
 }
 
-struct QuestionHistory {
-    let text: String
-    let correctAnswer: String
-    let firstWrong: String
-    let secondWrong: String
+
+struct HistoryAnswers {
+    let correct: String
+    let wrongA: String
+    let wrongB: String
+}
+
+struct QuizTopic {
+    
+    let math: [Question]
+    let history: [Question]
 }
